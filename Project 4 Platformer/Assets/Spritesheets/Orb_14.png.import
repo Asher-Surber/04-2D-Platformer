@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/M484SpaceSoldier.png-3533a35599bf9eed4bd85338603fcf01.stex"
+path="res://.import/Orb_14.png-9289e1f9ba426f12e69b5b65b78168ce.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Spritesheets/M484SpaceSoldier.png"
-dest_files=[ "res://.import/M484SpaceSoldier.png-3533a35599bf9eed4bd85338603fcf01.stex" ]
+source_file="res://Assets/Spritesheets/Orb_14.png"
+dest_files=[ "res://.import/Orb_14.png-9289e1f9ba426f12e69b5b65b78168ce.stex" ]
 
 [params]
 

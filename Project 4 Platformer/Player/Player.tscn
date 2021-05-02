@@ -1,0 +1,194 @@
+[gd_scene load_steps=27 format=2]
+
+[ext_resource path="res://Player/Player.gd" type="Script" id=1]
+[ext_resource path="res://Assets/Spritesheets/Platformer character spritesheet.png" type="Texture" id=2]
+[ext_resource path="res://Player/StateMachine/Moving.gd" type="Script" id=3]
+[ext_resource path="res://Player/StateMachine/Jumping.gd" type="Script" id=5]
+[ext_resource path="res://Player/StateMachine/Coyote.gd" type="Script" id=6]
+[ext_resource path="res://Player/StateMachine/Falling.gd" type="Script" id=7]
+[ext_resource path="res://Player/StateMachine/Idle.gd" type="Script" id=8]
+[ext_resource path="res://Player/StateMachine/MovingAndJumping.gd" type="Script" id=9]
+[ext_resource path="res://Player/StateMachine/StateMachine.gd" type="Script" id=10]
+
+[sub_resource type="AtlasTexture" id=1]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=2]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 51, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=3]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 102, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=4]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 153, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=5]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 204, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=6]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 255, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=7]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 306, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=8]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 357, 55, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=9]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 204, 0, 51, 55 )
+
+[sub_resource type="AtlasTexture" id=10]
+flags = 4
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 57, 55 )
+
+[sub_resource type="SpriteFrames" id=11]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "Moving",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ) ],
+"loop": true,
+"name": "Jumping",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 10 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=12]
+radius = 17.1888
+height = 18.44
+
+[sub_resource type="Gradient" id=13]
+offsets = PoolRealArray( 0, 0, 9.91838e-39, 0.110048 )
+colors = PoolColorArray( 0, 0, 0, 0.00392157, 0.00392157, 0.00392157, 0.00392157, 0.00392157, 0, 0, 0.00392157, 0.00392157, 0.62201, 0.62201, 0.623492, 0.623492 )
+
+[sub_resource type="GradientTexture" id=14]
+gradient = SubResource( 13 )
+
+[sub_resource type="Curve" id=15]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=17]
+lifetime_randomness = 0.52
+emission_shape = 1
+emission_sphere_radius = 3.95
+flag_disable_z = true
+spread = 47.07
+gravity = Vector3( -100, 0, 0 )
+initial_velocity = 68.96
+initial_velocity_random = 0.56
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+linear_accel = 9.2
+damping = 3.5
+scale = 1.5
+scale_random = 0.6
+scale_curve = SubResource( 16 )
+color_ramp = SubResource( 14 )
+
+[node name="Player" type="KinematicBody2D"]
+collision_layer = 2
+collision_mask = 29
+script = ExtResource( 1 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 11 )
+animation = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1.54165 )
+shape = SubResource( 12 )
+
+[node name="Floor" type="Node2D" parent="."]
+
+[node name="Center" type="RayCast2D" parent="Floor"]
+enabled = true
+cast_to = Vector2( 0, 30 )
+
+[node name="Left" type="RayCast2D" parent="Floor"]
+visible = false
+cast_to = Vector2( -13, 0 )
+
+[node name="Right" type="RayCast2D" parent="Floor"]
+visible = false
+cast_to = Vector2( 13, 0 )
+
+[node name="Wall" type="Node2D" parent="."]
+visible = false
+
+[node name="Left" type="RayCast2D" parent="Wall"]
+enabled = true
+cast_to = Vector2( -13, 0 )
+collide_with_areas = true
+
+[node name="Right" type="RayCast2D" parent="Wall"]
+enabled = true
+cast_to = Vector2( 13, 0 )
+collide_with_areas = true
+
+[node name="StateMachine" type="Node" parent="."]
+script = ExtResource( 10 )
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource( 8 )
+
+[node name="Moving" type="Node" parent="StateMachine"]
+script = ExtResource( 3 )
+
+[node name="Jumping" type="Node" parent="StateMachine"]
+script = ExtResource( 5 )
+
+[node name="Moving_and_Jumping" type="Node" parent="StateMachine"]
+script = ExtResource( 9 )
+
+[node name="Falling" type="Node" parent="StateMachine"]
+script = ExtResource( 7 )
+
+[node name="WallJump" type="Node" parent="StateMachine"]
+
+[node name="Timer" type="Timer" parent="StateMachine/WallJump"]
+wait_time = 4.0
+one_shot = true
+
+[node name="Particles2D" type="Particles2D" parent="StateMachine/WallJump"]
+visible = false
+rotation = -0.0279253
+emitting = false
+explosiveness = 0.25
+randomness = 0.85
+process_material = SubResource( 17 )
+
+[node name="Coyote" type="Node" parent="StateMachine"]
+script = ExtResource( 6 )
+
+[node name="Timer" type="Timer" parent="StateMachine/Coyote"]
+wait_time = 0.2
+one_shot = true
+[connection signal="timeout" from="StateMachine/Coyote/Timer" to="StateMachine/Coyote" method="_on_Timer_timeout"]

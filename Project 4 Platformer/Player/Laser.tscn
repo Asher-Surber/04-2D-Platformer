@@ -1,0 +1,22 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://Assets/Spritesheets/beams.png" type="Texture" id=1]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 5.36069
+height = 7.38107
+
+[node name="Area2D" type="Area2D"]
+collision_layer = 33
+collision_mask = 5
+
+[node name="CollisionPolygon2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 40, 27, 14, 20 )
+region_filter_clip = true
+
+[node name="Laser" type="Node2D" parent="."]
